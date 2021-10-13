@@ -1,0 +1,97 @@
+IoC를 지원하는 스프링 컨테이너는 
+객체를 관리하는 별도의 설정파일을 필요로 한다!
+
+applicationContext.xml
+	<beans> 루트 엘리먼트
+	설정관련 코드(네임스페이스)
+
+<bean> 엘리먼트로 클래스를 설정파일에 등록 할 수 있다!
+	init-method : 멤버 변수 초기화 작업을 위한 속성 
+	destory-method : 객체 삭제시 호출되는 메서드를 위한 속성
+	lazy-init="true" : 사용안하는 객체 안만듬
+	scope : 객체들이 많아짐 -> 하나만 존재해야하거나, 하나만 있어도 괜찮은 경우 
+		=> 메모리에 객체를 하나만 두어 공유한다! == 싱글톤 패턴이 필요하다!
+		객체를 생성하는 주체가 존재여부를 판단하여 처리
+		== 현재 스프링 컨테이너 설정 디폴트 상태 <=> scope="prototype"
+		Phone p = new Phone();
+		Phoner p2 = p;		
+		Phoner p3 = p; <= 싱글톤 패턴		
+
+<import> 엘리먼트 -> 스프링 설정파일을 하나로 통합가능
+	<import resource="~~~~.xml" />
+
+스프링 컨테이너의 동작순서
+	설정파일 applicationContext.xml을 로딩
+	GenericXmlApplicationContext(스프링 컨테이너) 실행
+	등록한 객체 요쳥(lookup)함 => 컨테이너가 설정파일을 보고  객체를 return 처리 
+	
+BeanFactory vs ApplicationContext
+클라이언트가 객체를 요청했을때, 객체 생성
+컨테이너 동작했을때 객체 생성 XX 
+지연로딩 
+
+	       다양한 기능을 지원
+	       <bean>으로 등록한 모든 객체를 생성
+	       즉시로딩
+
+[의존성 관리]
+	객체 생성+객체들의 의존관계 또한 컨테이너에게 관리시킴
+	IoC의 핵심 
+	-Dependency Lockup
+	-Dependency Injection
+	객체들간의 의존관계를 스프링 설정파일에 등록
+	등록된 정보를 확인
+	컨테이너가 관리
+		-Constructor Injection
+		-Setter Injection
+			태그바디 -> 속성
+			p 네임스페이스
+
+원인 : 소스코드에 객체생성코드를 직접작성
+해결 : xml 파일에 의존성주입을 설정 
+
+-> 한가지 방식으로 맞추어서 이용
+=> Setter Injection시 주의사항
+	<bean>을 보고 객체생성 후 
+	setter 호출
+	기본생성자가 필요함
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

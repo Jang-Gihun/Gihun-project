@@ -1,0 +1,6 @@
+Avilable Software
+
+Add
+
+Name: STS
+Location: https://dist.springsource.com/snapshot/TOOLS/nightly/e4.18
