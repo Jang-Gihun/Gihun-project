@@ -8,7 +8,8 @@ public class PhoneUser {
 	public static void main(String[] args) {
 
 		AbstractApplicationContext factory = new GenericXmlApplicationContext("applicationContext.xml");
-
+		//XmlApplicationContext << spring
+		
 		Phone phone = (Phone) factory.getBean("phone");
 		phone.powerOn();
 		phone.volumeUp();

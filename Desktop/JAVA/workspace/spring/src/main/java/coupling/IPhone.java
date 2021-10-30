@@ -1,11 +1,13 @@
 package coupling;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component("phone")
 public class IPhone implements Phone {
 		@Autowired
+		@Qualifier("aw")
 		private Watch watch;
 		private String user;
 		public IPhone() {

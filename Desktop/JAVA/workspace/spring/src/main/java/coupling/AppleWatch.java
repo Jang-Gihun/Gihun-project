@@ -1,8 +1,5 @@
 package coupling;
 
-import org.springframework.stereotype.Component;
-
-@Component("aw")
 public class AppleWatch implements Watch {
 	public  AppleWatch() {
 		System.out.println("局敲况摹 积己凳");

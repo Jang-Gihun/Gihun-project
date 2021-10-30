@@ -3,11 +3,56 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
-		
-	<context:component-scan base-package="coupling" />
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
 
+	<context:component-scan base-package="com.jang.app" />
+	
+	<bean class="com.jang.app.common.BeforeAdvice" id="beforeClient" />
+	<bean class="com.jang.app.common.AfterAdvice" id="dataGood" />
+	<aop:config>
+			<aop:pointcut expression="execution(* com.jang.app..*Impl.*(..))" id="allPC"/>
+			<aop:pointcut expression="execution(* com.jang.app..*Impl.get*(..))" id="getPC"/>
+			<aop:aspect ref="dataGood">
+					<aop:after method="printLog" pointcut-ref="getPC"/>
+			</aop:aspect>
+			<aop:aspect ref="beforeClient">
+					<aop:before method="printLog" pointcut-ref="allPC"/>
+			</aop:aspect>
+	</aop:config>
+	
+	 		
+	<bean class="com.jang.app.common.BeforeAdvice" id="ba"></bean>
+	<bean class="com.jang.app.common.AfterAdvice" id="aa"></bean>
+	<bean class="com.jang.app.common.AfterThrowingAdvice" id="ata"></bean>
+	<bean class="com.jang.app.common.AfterReturningAdvice" id="ara"></bean>
+	<bean class="com.jang.app.common.AroundAdvice" id="around"></bean>
+	<aop:config>
+			<aop:pointcut expression="execution(* com.jang.app..*Impl.*(..))" id="aPointcut"/>
+			<aop:pointcut expression="execution(* com.jang.app..*Impl.get*(..))" id="bPointcut"/>
+			<aop:aspect ref="ba">
+					<aop:before method="printLog" pointcut-ref="aPointcut"/>
+			</aop:aspect>
+			<aop:aspect ref="aa">
+					<aop:after method="printLog" pointcut-ref="aPointcut"/>
+			</aop:aspect>
+			<aop:aspect ref="ata">
+					<aop:after-throwing method="printLog" pointcut-ref="aPointcut"/>
+			</aop:aspect>
+			<aop:aspect ref="ara">
+					<aop:after-returning method="printLog" returning="reObj" pointcut-ref="bPointcut"/>
+			</aop:aspect>
+			<aop:aspect ref="around">
+					<aop:around method="printLog" pointcut-ref="aPointcut"/>
+			</aop:aspect>
+	</aop:config>
+	
+<!-- 		
+	<context:component-scan base-package="coupling" />
+	<bean class="coupling.AppleWatch" id="watch" />
+ -->
 <!-- 
 	<bean class="coupling.IPhone" id="phone">
 			<property name="watch" ref="aw" />
